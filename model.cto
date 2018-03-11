@@ -1,0 +1,69 @@
+/**
+ * Defines model for pledge issue and exchange
+ */
+
+namespace org.acme.model
+
+participant User identified by email {
+o String email regex=/[a-z0-9.-]+@[a-z0-9.]+/
+o String username
+o String fullname
+o Gender gender
+o String description optional
+o ProjectListing[] projects
+o Pledge[] ownedPledges
+}
+
+asset Pledge identified by id {
+o String id
+--> User owner
+--> ProjectListing proj
+o Double amountPledged
+o Entitlement[] entitlements optional
+o Boolean isActive
+}
+
+/* assume all entitlements to be done by endDate, not manipulable */
+asset ProjectListing identified by projId {
+o String projId
+o String projName
+o String description
+o DateTime startDate
+o DateTime endDate
+o Boolean isOngoing
+o PledgeTemplate[] pledgeTypes optional
+o Pledge[] issuedPledges optional
+--> User[] creators
+}
+
+enum Gender {
+o Male
+o Female
+o Other
+}
+
+concept Entitlement {
+o String name
+o Integer amount
+}
+
+concept PledgeTemplate {
+--> ProjectListing proj
+o Entitlement[] entitlements optional
+o Integer limit optional
+o Integer currentPledged optional
+}
+
+transaction requestPledge {
+o PledgeTemplate template
+--> User user
+o Double amountPledged
+}
+
+transaction createProjListing {
+--> User creator
+--> User[] co_creators
+o String name
+o String description
+o DateTime endDate
+}
