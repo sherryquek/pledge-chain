@@ -1,0 +1,54 @@
+#flexCards {
+  justify-content: space-evenly;
+}
+
+#title {
+  padding-top: 2rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+  width: 16rem;
+}
+
+.container-quarter {
+  width: 24.99999%;
+  float: left;
+  padding: 0 8px;
+}
+
+.container-threequarter {
+  width: 74.99999%;
+  float: left;
+  padding: 0 8px;
+}
+
+.container-main {
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+.header-text{
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  font-size: 30px;
+}
+
+.grey-bg {
+  border-radius: 16px;
+  background-color:#F1F1F1;
+  font-size: 12px;
+  text-align: center;
+}
+
+.blue-bg {
+  padding: 0.01em 16px;
+  border-radius: 16px;
+  color:#FFFFFF;
+  background-color:#006DCC;
+  text-align: center;
+}
+
+.dollar {
+  font-size: 20px;
+}

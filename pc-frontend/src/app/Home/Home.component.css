@@ -1,0 +1,22 @@
+#home {
+  max-width: 1500px;
+}
+
+.homeImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.homeTitle {
+  background-color: #000!important;
+  opacity: 0.75;
+  padding: 8px 16px!important;
+  color: white;
+  margin-top: 16px!important;
+  text-align: center!important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}

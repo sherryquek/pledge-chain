@@ -1,0 +1,15 @@
+#title {
+  padding-top: 2rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+#contact {
+  width: 16rem;
+}
+
+#flexCards {
+  justify-content: space-evenly;
+}
