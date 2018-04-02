@@ -11,6 +11,9 @@ import { AboutComponent } from './About/About.component';
 import { CreateComponent } from './Create/Create.component';
 import { ProfileComponent } from './Profile/Profile.component';
 import { ProjectDetailsComponent } from './ProjectDetails/ProjectDetails.component';
+import { UpdateProjectComponent } from './UpdateProject/UpdateProject.component';
+import { AddPledgeTypeComponent } from './AddPledgeType/AddPledgeType.component';
+import { PledgeAmountComponent } from './PledgeAmount/PledgeAmount.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +23,9 @@ const appRoutes: Routes = [
   { path: 'create', component: CreateComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'project-details', component: ProjectDetailsComponent},
+  { path: 'add-pledge-type', component: AddPledgeTypeComponent},
+  { path: 'update-project', component: UpdateProjectComponent},
+  { path: 'pledge-amount', component: PledgeAmountComponent},
 ];
 
 @NgModule({
@@ -31,7 +37,10 @@ const appRoutes: Routes = [
     AboutComponent,
     CreateComponent,
     ProfileComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    UpdateProjectComponent,
+    AddPledgeTypeComponent,
+    PledgeAmountComponent
   ],
   imports: [
     RouterModule.forRoot(
