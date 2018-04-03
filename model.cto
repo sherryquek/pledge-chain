@@ -10,8 +10,25 @@ o String username
 o String fullname
 o Gender gender
 o String description optional
+o Address address
 o ProjectListing[] projects
 o Pledge[] ownedPledges
+}
+
+participant DeliveryService identified by companyName {
+o String companyName
+o String description
+o String email
+o String phoneNumber
+o String website
+}
+
+participant PaymentService identified by companyName {
+o String companyName
+o String description
+o String email
+o String phoneNumber
+o String website
 }
 
 asset Pledge identified by id {
@@ -19,21 +36,26 @@ o String id
 --> User owner
 --> ProjectListing proj
 o Double amountPledged
-o Entitlement[] entitlements optional
+o String entitlement optional
 o Boolean isActive
+o Double compensation
 }
 
-/* assume all entitlements to be done by endDate, not manipulable */
 asset ProjectListing identified by projId {
 o String projId
 o String projName
 o String description
+o Integer fundingTarget
+o Double currRaised
 o DateTime startDate
 o DateTime endDate
+o DateTime fundingEndDate
 o Boolean isOngoing
 o PledgeTemplate[] pledgeTypes optional
+o Integer nPledgeTypes
 o Pledge[] issuedPledges optional
---> User[] creators
+--> User creator
+o ProjectStatus status
 }
 
 enum Gender {
@@ -42,16 +64,30 @@ o Female
 o Other
 }
 
-concept Entitlement {
-o String name
-o Integer amount
+enum ProjectStatus {
+o Funding
+o Funded
+o Shipping
+o Cancelled
+o Closed
+}
+
+concept Address {
+o String house
+o String street
+o String county
+o String postcode
+o String country
 }
 
 concept PledgeTemplate {
 --> ProjectListing proj
-o Entitlement[] entitlements optional
+o String referenceID
+o Double minAmount
+o String entitlement optional
 o Integer limit optional
-o Integer currentPledged optional
+o Integer currentPledged
+o Double compensation
 }
 
 transaction requestPledge {
@@ -62,8 +98,34 @@ o Double amountPledged
 
 transaction createProjListing {
 --> User creator
---> User[] co_creators
 o String name
 o String description
 o DateTime endDate
+o DateTime startDate
+o String projectID
+o Integer fundingTarget
+o DateTime fundingEndDate
+}
+
+transaction addTemplate {
+--> ProjectListing proj
+o Double minAmount
+o String entitlement optional
+o Integer limit optional
+o Double compensation
+}
+
+transaction cancelProj{
+--> User user
+--> ProjectListing proj
+}
+
+transaction updateStatus {
+--> Pledge pledge
+o Boolean newActiveStatus
+}
+
+transaction updateProjStatus {
+--> ProjectListing proj
+o ProjectStatus newStatus
 }
