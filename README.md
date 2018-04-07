@@ -1,8 +1,10 @@
 # Pledge Chain
 IS4302 project, AY201718 Sem 2
+
 Tutorial 1 - Group 2
 
 ## Getting Started
+### User UI
 * Download NodeJS from <https://nodejs.org/en/download/>
 * Run `npm install -g @angular/cli`
 * `cd pc-frontend`
