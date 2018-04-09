@@ -58,6 +58,16 @@ o Pledge[] issuedPledges optional
 o ProjectStatus status
 }
 
+asset PledgeTemplate identified by referenceID{
+--> ProjectListing proj
+o String referenceID
+o Double minAmount
+o String entitlement optional
+o Integer limit optional
+o Integer currentPledged
+o Double compensation
+}
+
 enum Gender {
 o Male
 o Female
@@ -80,18 +90,8 @@ o String postcode
 o String country
 }
 
-concept PledgeTemplate {
---> ProjectListing proj
-o String referenceID
-o Double minAmount
-o String entitlement optional
-o Integer limit optional
-o Integer currentPledged
-o Double compensation
-}
-
 transaction requestPledge {
-o PledgeTemplate template
+o String templateID
 --> User user
 o Double amountPledged
 }

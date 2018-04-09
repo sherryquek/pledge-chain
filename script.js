@@ -8,51 +8,58 @@ arguments
 * @transaction
 */
 function requestPledge(args) {
-  // disallow pledges for limited pledge types that have reached the limit
-  if (args.template.limit && args.template.currentPledged && args.template.currentPledged == args.template.limit) {
-    throw new Error("Pledge limit reached.");
-  }
   
-  if (args.amountPledged < args.template.minAmount) {
-  	throw new Error("Amount pledged is insufficient.");
-  }
+  return getAssetRegistry('org.acme.model.PledgeTemplate').then(function(templateRegistry) {
+    return templateRegistry.get(args.templateID);
+  }).then(function(template) {
+    // disallow pledges for limited pledge types that have reached the limit
+    if (template.limit && template.currentPledged && template.currentPledged == template.limit) {
+      throw new Error("Pledge limit reached.");
+    }
   
-  // route transaction through payments API and get output
-  var transactionSuccess = true; // assign result from payments API. If didn't go through, throw error.
-  
-  // keep track of current number of pledges
-  if (args.template.limit && args.template.currentPledged && args.template.currentPledged < args.template.limit) {
-    args.template.currentPledged += 1;
-  }
-  
-  var factory = getFactory();
-  var pledgeId = args.template.proj.projName + "_" + args.template.referenceID + "_" + args.user.username; // assume each user pledges at most once to 1 type of pledge
+    if (args.amountPledged < template.minAmount) {
+      throw new Error("Amount pledged is insufficient.");
+    }
+    
+    // route transaction through payments API and get output
+    var transactionSuccess = true; // assign result from payments API. If didn't go through, throw error.
+
+    // keep track of current number of pledges
+    if (template.limit && template.currentPledged >= args.template.limit) {
+      throw new Error("Limit reached for this pledge type.");
+    }
+    template.currentPledged += 1;
+    
+    var factory = getFactory();
+    var pledgeId = template.referenceID + "_" + args.user.username; // assume each user pledges at most once to 1 type of pledge
     var newPledge = factory.newResource('org.acme.model', 'Pledge', pledgeId);
     newPledge.owner = args.user;
     newPledge.amountPledged = args.amountPledged;
-    newPledge.proj = args.template.proj;
-    newPledge.entitlement = args.template.entitlement;
+    newPledge.proj = template.proj;
+    newPledge.entitlement = template.entitlement;
     newPledge.isActive = true;
-    newPledge.compensation = args.template.compensation;
-  
-  if (args.template.proj.issuedPledges) {
-  	args.template.proj.issuedPledges.push(newPledge);
-  } else {
-  	args.template.proj.issuedPledges = [newPledge];
-  }
-  
-  args.template.proj.currRaised += args.amountPledged;
-  if (args.template.proj.currRaised >= args.template.proj.fundingTarget) {
-  	args.template.proj.status = "Funded";
-  }
-  
-  return getAssetRegistry('org.acme.model.Pledge').then(function(pledgeRegistry) {
-	return pledgeRegistry.add(newPledge);
+    newPledge.compensation = template.compensation;
+    
+    if (template.proj.issuedPledges) {
+      template.proj.issuedPledges.push(newPledge);
+    } else {
+      template.proj.issuedPledges = [newPledge];
+    }
+
+    template.proj.currRaised += args.amountPledged;
+    if (template.proj.currRaised >= template.proj.fundingTarget) {
+      template.proj.status = "Funded";
+    }
+  }).then(function() {
+    return getAssetRegistry('org.acme.model.Pledge');
+  }).then(function(pledgeRegistry) {
+    return pledgeRegistry.add(newPledge);
   }).then(function() {
     return getAssetRegistry('org.acme.model.ProjectListing');
-  }).then(function(projListingRegistry) {
-    return projListingRegistry.update(args.template.proj);
+  }).then(function(projListingRegistry){
+    return projListingRegistry.update(template.proj);
   });
+
 }
 
 /**
@@ -63,7 +70,7 @@ function updateStatus(args) {
   args.pledge.isActive = args.newActiveStatus;
   
   return getAssetRegistry('org.acme.model.Pledge').then(function(pledgeRegistry) {
-  	return pledgeRegistry.update(args.pledge);
+    return pledgeRegistry.update(args.pledge);
   });
 }
 
@@ -72,24 +79,30 @@ function updateStatus(args) {
 * @transaction
 */
 function createProjListing(args) {
-	return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
-    	var factory = new Factory();
-    	var projId = args.projectID;
-    	var newProj = factory.newResource('org.acme.model', 'ProjectListing', projID);
-      	
-      	newProj.projName = args.name;
+  return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
+      var factory = getFactory();
+      var projId = args.projectID;
+      var newProj = factory.newResource('org.acme.model', 'ProjectListing', projId);
+        
+        newProj.projName = args.name;
         newProj.description = args.description;
         newProj.startDate = args.startDate;
         newProj.endDate = args.endDate;
         newProj.isOngoing = true;
-      	newProj.nPledgeTypes = 0;
+        newProj.nPledgeTypes = 0;
         newProj.creator = args.creator;
-      	newProj.fundingTarget = args.fundingTarget;
-      	newProj.currRaised = 0;
-      	newProj.fundingEndDate = args.fundingEndDate;
-      	newProj.status = "Funding";
+        newProj.fundingTarget = args.fundingTarget;
+        newProj.currRaised = 0;
+        newProj.fundingEndDate = args.fundingEndDate;
+        newProj.status = "Funding";
       
-      	return projListingRegistry.add(newProj);
+        args.creator.projects.push(newProj);
+      
+        return projListingRegistry.add(newProj);
+    }).then(function() {
+      return getParticipantRegistry('org.acme.model.User');
+    }).then(function(userRegistry) {
+      return userRegistry.update(args.creator);
     });
 }
 
@@ -100,31 +113,36 @@ function createProjListing(args) {
 */
 function addTemplate(args) {
   var factory = getFactory();
-  var newTemplate = factory.newConcept('org.acme.model','PledgeTemplate');
+  referenceID = args.proj.projName + "_" + args.proj.nPledgeTypes;
+  var newTemplate = factory.newResource('org.acme.model','PledgeTemplate', referenceID);
   newTemplate.proj = args.proj;
   newTemplate.minAmount = args.minAmount;
   newTemplate.currentPledged = 0;
-  newTemplate.referenceID = args.proj.projName + "_" + args.proj.nPledgeTypes;
   newTemplate.compensation = args.compensation;
   
   if (args.entitlement) {
-  	newTemplate.entitlement = args.entitlement;
+    newTemplate.entitlement = args.entitlement;
   }
 
   if (args.limit) {
-  	newTemplate.limit = args.limit;
+    newTemplate.limit = args.limit;
   }
-
-  return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
+  
+  return getAssetRegistry('org.acme.model.PledgeTemplate').then(function(templateRegistry) {
+    return templateRegistry.add(newTemplate);
+  }).then(function() {
+    return getAssetRegistry('org.acme.model.ProjectListing');
+  }).then(function(projListingRegistry) {
     if (args.proj.pledgeTypes) {
-    	args.proj.pledgeTypes.push(newTemplate);
+      args.proj.pledgeTypes.push(newTemplate);
     } else {
-    	args.proj.pledgeTypes = [newTemplate];
+      args.proj.pledgeTypes = [newTemplate];
     }
     
-	args.proj.nPledgeTypes += 1;
-	return projListingRegistry.update(args.proj);
+  args.proj.nPledgeTypes += 1;
+  return projListingRegistry.update(args.proj);
   });
+
 }
 
 /**
@@ -132,15 +150,10 @@ function addTemplate(args) {
 * @transaction
 */
 function cancelProj(args) {
-	if (args.user != args.proj.creator) {
-    	throw new Error("Only creators of a project are allowed to cancel it.");
-    }
-  	
-  	args.proj.status = "Cancelled";	
-  
-  	return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
-    	projListingRegistry.update(args.proj);
-    });
+  return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
+    args.proj.status = "Cancelled";
+    return projListingRegistry.update(args.proj); 
+  });  
 }
 
 /**
@@ -151,7 +164,7 @@ function updateProjStatus(args) {
   args.proj.status = args.newStatus;
   
   return getAssetRegistry('org.acme.model.ProjectListing').then(function(projListingRegistry) {
-  	return projListingRegistry.update(args.proj);
+    return projListingRegistry.update(args.proj);
   });
 
 }
