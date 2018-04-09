@@ -8,17 +8,24 @@
       <div class="container-main">
         <img src="/assets/project1.png" style="width:100%">
         <div class="container">
-          <br>
-          <h3>FabaButter: Dairy-Free Butter</h3>
-          <hr>
-          <div class="date"><i class="fa fa-calendar"></i></div>
+          <ng-container *ngFor="let ProjectListing of data">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ProjectListing.projName}}</h5>
+                  <p class="card-text">{{ProjectListing.description}}</p>
+                  <p class="card-text">{{ProjectListing.startDate}}</p>
+                  <a routerLink="/project-details" routerLinkActive="active" class="btn btn-primary">Know More</a>
+                </div>
+              </div>
+            </ng-container>
+          <!-- <div class="date"><i class="fa fa-calendar"></i></div>
           <div class="date">Funding End date: 30 May 2018</div>
           <div class="grey-bg">
             <div class="blue-bg" style="width:90%">90%</div>
           </div>
           <br>
           <div class="date">Project End date: 1 Sep 2018</div>
-          <div class="grey-bg">Project not yet started</div>
+          <div class="grey-bg">Project not yet started</div> -->
         </div>
         <br>
       </div>
