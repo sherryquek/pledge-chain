@@ -2,18 +2,22 @@
   <div class="container">
     <h1 id="title">Add Pledge Type</h1>
     <hr/>
-    <form>
+    <form #createForm="ngForm" (ngSubmit)="createTemplate(createForm)">
       <div class="form-group">
-        <label for="exampleInputName">Minimum amount</label>
-        <input type="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount">
+        <label for="minamt">Minimum amount</label>
+        <input type="name" ng-model="minamt" class="form-control" id="minamt" aria-describedby="emailHelp" placeholder="Enter minimum amount">
       </div>
       <div class="form-group">
-        <label for="exampleInputName">Limit</label>
-        <input type="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter limit of the pledge type">
+        <label for="limit">Limit</label>
+        <input type="name" ng-model="limit" class="form-control" id="limit" aria-describedby="emailHelp" placeholder="Enter limit of the pledge type">
       </div>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1">Entitlement</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter entitlement"></textarea>
+        <label for="compensation">Compensation</label>
+        <input type="name" ng-model="compensation" class="form-control" id="compensation" aria-describedby="emailHelp" placeholder="Enter compensation of the pledge type">
+      </div>
+      <div class="form-group">
+        <label for="entitlement">Entitlement</label>
+        <textarea class="form-control" ng-model="entitlement" id="entitlement" rows="3" placeholder="Enter entitlement"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

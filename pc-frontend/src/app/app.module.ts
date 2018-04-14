@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   { path: 'create', component: CreateComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'project-details/:projId', component: ProjectDetailsComponent},
-  { path: 'add-pledge-type', component: AddPledgeTypeComponent},
+  { path: 'add-pledge-type/:projId', component: AddPledgeTypeComponent},
   { path: 'update-project', component: UpdateProjectComponent},
   { path: 'pledge-amount/:referenceID', component: PledgeAmountComponent},
 ];
