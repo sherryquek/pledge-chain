@@ -2,12 +2,14 @@
   <div class="container">
     <h1 id="title">Pledge</h1>
     <hr/>
-    <form>
+    <form #pledgeForm="ngForm" (ngSubmit)="requestPledge(pledgeForm)">
       <div class="form-group">
         <label for="exampleInputName">Amount</label>
-        <input type="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount">
+        <input ng-model="amount" id="amount" type="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <!-- <button class="btn btn-primary" (click)="requestPledge()">Submit</button> -->
+      <button class="btn btn-primary">Submit</button>
     </form>
   </div>
 </div>
+

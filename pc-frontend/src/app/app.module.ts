@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   { path: 'project-details/:projId', component: ProjectDetailsComponent},
   { path: 'add-pledge-type', component: AddPledgeTypeComponent},
   { path: 'update-project', component: UpdateProjectComponent},
-  { path: 'pledge-amount', component: PledgeAmountComponent},
+  { path: 'pledge-amount/:referenceID', component: PledgeAmountComponent},
 ];
 
 @NgModule({

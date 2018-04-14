@@ -52,7 +52,7 @@
                   <p class="card-text">Entitlement: {{proj.entitlement}}</p>
                   <p class="card-text"># Pledgers: {{proj.currentPledged}}</p>
                   <p class="card-text">Compensation: ${{proj.compensation}}</p>
-                   <a routerLink="/pledge-amount" routerLinkActive="active" class="btn btn-primary" style="color:white">Pledge</a>
+                   <a routerLink="/pledge-amount/{{proj.referenceID}}" routerLinkActive="active" class="btn btn-primary" style="color:white">Pledge</a>
                 </div>
               </div>
             </ng-container>
