@@ -8,16 +8,21 @@
       <div class="container-main">
         <img src="/assets/project1.png" style="width:100%">
         <div class="container">
-          <ng-container *ngFor="let ProjectListing of data">
+          <!-- <ng-container *ngFor="let pL of data">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">{{ProjectListing.projName}}</h5>
+                  <h5 class="card-title">{{pL.description}}</h5>
                   <p class="card-text">{{ProjectListing.description}}</p>
                   <p class="card-text">{{ProjectListing.startDate}}</p>
                   <a routerLink="/project-details" routerLinkActive="active" class="btn btn-primary">Know More</a>
                 </div>
               </div>
-            </ng-container>
+            </ng-container> -->
+            <h5 class="card-title"><b>{{data.projName}}</b></h5>
+            <p class="card-text"><b>{{data.description}}</b></p>
+            <p class="card-text">Status: {{data.status}}</p>
+            <p class="card-text">Target: <u>${{data.fundingTarget}}</u></p> 
+            <p class="card-text">Currently Raised: <u>${{data.currRaised}}</u></p>
           <!-- <div class="date"><i class="fa fa-calendar"></i></div>
           <div class="date">Funding End date: 30 May 2018</div>
           <div class="grey-bg">
@@ -40,7 +45,18 @@
         <h2 class="header-text"><b><i class="fa fa-book"></i> Types of Pledges</b></h2>
         <div class="container">
           <div class="d-flex flex-shrink" id="flexCards">
-            <div class="card">
+            <ng-container *ngFor="let proj of data.pledgeTypes">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Minimum ${{proj.minAmount}}</b></h5>
+                  <p class="card-text">Entitlement: {{proj.entitlement}}</p>
+                  <p class="card-text"># Pledgers: {{proj.currentPledged}}</p>
+                  <p class="card-text">Compensation: ${{proj.compensation}}</p>
+                   <a routerLink="/pledge-amount" routerLinkActive="active" class="btn btn-primary" style="color:white">Pledge</a>
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Gold Pledge</h5>
                 <div class="dollar"><i class="fa fa-dollar-sign"></i> 200</div>
@@ -66,7 +82,7 @@
                 <p class="card-text">10 boxes of FabaButter</p>
                 <a routerLink="/pledge-amount" routerLinkActive="active" class="btn btn-primary" style="color:white">Pledge</a>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <hr>
