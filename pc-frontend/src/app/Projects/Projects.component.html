@@ -10,7 +10,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ProjectListing.projName}}</h5>
             <p class="card-text">{{ProjectListing.description}}</p>
-            <p class="card-text">{{ProjectListing.startDate}}</p>
+            <p class="card-text">Funding End: <b><i>{{ProjectListing.fundingEndDate}}</i></b></p>
             <a routerLink="/project-details/{{ProjectListing.projId}}" routerLinkActive="active" class="btn btn-primary">Know More</a>
           </div>
         </div>
