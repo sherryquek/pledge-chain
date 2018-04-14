@@ -2,73 +2,32 @@
   <div class="container">
     <h1 id="title">Create</h1>
     <hr/>
-    <ngb-tabset type="pills">
-      <ngb-tab title="New Project">
-        <ng-template ngbTabContent>
-          <br>
-          <p>
-            Bring your creative project to life.
-          </p>
-          <hr>
-          <form>
-            <div class="form-group">
-              <label for="exampleInputName">Project Name</label>
-              <input type="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter project name">
-            </div>
-            <!-- <div class="form-group">
-              <label for="exampleInputEmail1">Project Description</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter project description">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div> -->
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Project Description</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter project description"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Project End Date</label>
-              <input type="text" class="form-control" placeholder="DD MM YYYY">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Funding End Date</label>
-              <input type="text" class="form-control" placeholder="DD MM YYYY">
-            </div>
-            <!-- <div class="form-group">
-              <label for="exampleFormControlTextarea1">Comment</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab title="Exchange Pledge">
-        <ng-template ngbTabContent>
-          <br>
-          <p>
-            Exchange your pledge for a new project.
-          </p>
-          <hr>
-          <form>
-            <div class="form-group">
-              <label for="exampleInputName">Project Name</label>
-              <input type="text" class="form-control" placeholder="Project Name">
-            </div>
-            <!-- <div class="form-group">
-              <label for="exampleInputEmail1">Project Description</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter project description">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div> -->
-            <div class="form-group">
-              <label for="exampleInputPassword1">Add-on Price</label>
-              <input type="text" class="form-control" placeholder="Price">
-            </div>
-            <!-- <div class="form-group">
-              <label for="exampleFormControlTextarea1">Comment</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+    <p>
+      Bring your creative project to life.
+    </p>
+    <hr>
+    <form #createForm="ngForm" (ngSubmit)="createProjListing(createForm)">
+      <div class="form-group">
+        <label for="projName">Project Name:</label>
+        <input type="text" ng-model="projName" class="form-control" id="projName" placeholder="Enter project name">
+      </div>
+      <div class="form-group">
+        <label for="projDesc">Project Description:</label>
+        <input type="text" ng-model="projDesc" class="form-control" id="projDesc" placeholder="Enter project description">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Project End Date:</label>
+        <input type="text" ng-model="endDate" class="form-control" id="endDate" placeholder="DDMMYYYY">
+      </div>
+      <div class="form-group">
+        <label for="fundEndDate">Funding End Date:</label>
+        <input type="text" ng-model="fundEndDate" class="form-control" id="fundEndDate" placeholder="DDMMYYYY">
+      </div>
+      <div class="form-group">
+        <label for="fundTarget">Target Funding:</label>
+        <input type="text" ng-model="fundTarget" class="form-control" id="fundTarget" placeholder="Amount">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
   </div>
 </div>
