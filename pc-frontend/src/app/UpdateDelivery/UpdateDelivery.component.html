@@ -1,0 +1,28 @@
+<div>
+  <div class="container">
+    <h1 id="title">Projects</h1>
+    <hr/>
+    <p>Update project status!</p>
+    <br>
+    <div class="d-flex flex-wrap" id="flexCards">
+      <ng-container *ngFor="let ProjectListing of data">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ProjectListing.projName}}</h5>
+            <p class="card-text">{{ProjectListing.description}}</p>
+            <p class="card-text">{{ProjectListing.startDate}}</p>
+            <button class="btn btn-primary" (click)="updateProjStatus()">Update</button>
+          </div>
+        </div>
+      </ng-container>
+      <!-- <div class="card">
+        <img class="card-img-top" src="assets/project1.png" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">FabaButter: Dairy-Free Butter</h5>
+          <p class="card-text">Fora's FabaButter tastes like dairy butter, but it's plant-based. Sustainable.</p>
+          <a routerLink="/project-details" routerLinkActive="active" class="btn btn-primary">Know More</a>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

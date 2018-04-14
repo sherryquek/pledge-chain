@@ -1,0 +1,12 @@
+#flexCards {
+  justify-content: space-evenly;
+}
+
+#title {
+  padding-top: 2rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+  width: 16rem;
+}
