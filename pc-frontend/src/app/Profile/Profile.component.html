@@ -10,12 +10,47 @@
         <br>
         <div class="container">
           <br>
-          <p><i class="fa fa-user" style="font-size:15px"></i> Michelle Smith</p>
-          <p><i class="fa fa-credit-card" style="font-size:15px"></i> $240</p>
+          <p><i class="fa fa-user" style="font-size:15px"></i><br></p>
+            <table>
+              <tr>
+                <td width="100px">
+                  Username:
+                </td>
+                <td>
+                  {{data.username}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Name: 
+                </td>
+                <td>
+                  {{data.fullname}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Email:
+                </td>
+                <td>
+                  {{data.email}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Gender:
+                </td>
+                <td>
+                  {{data.gender}}
+                </td>
+              </tr>
+            </table>
 
           <hr>
-          <p style="font-size:15px"><b><i class="fa fa-book"></i> PROJECTS</b></p>
-          <p>Best Travel Bag</p>
+<!--           <p style="font-size:15px"><b><i class="fa fa-book"></i> PROJECTS</b></p>
+          <p>{{data.projects.projName}}</p>
+
+
           <div class="grey-bg">
             <div class="blue-bg" style="width:80%">80%</div>
           </div>
@@ -28,10 +63,10 @@
           <hr>
 
           <p style="font-size:15px"><b><i class="fa fa-book"></i> PLEDGES</b></p>
-          <p>Art Film Project</p>
+          <p>{{data.ownedPledges}}</p>
           <div class="grey-bg">
             <div class="blue-bg" style="width:93%">93%</div>
-          </div>
+          </div> -->
           <br>
           <br>
         </div>
@@ -45,10 +80,21 @@
     <div class="container-threequarter">
 
       <div class="container-main">
-        <h2 class="header-text"><b><i class="fa fa-book"></i> PROJECTS</b></h2>
+        <h2 class="header-text"><b><i class="fa fa-book"></i>MY PROJECTS</b></h2>
         <div class="container">
           <div class="d-flex flex-shrink" id="flexCards">
-            <div class="card">
+            <ng-container *ngFor="let proj of data.projects">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{proj.projName}}</b></h5>
+                  <p class="card-text"><b>{{proj.description}}</b></p>
+                  <p class="card-text">Funding Target: ${{proj.fundingTarget}}</p>
+                  <p class="card-text">Currently Raised: ${{proj.currRaised}}</p>
+                  <p class="card-text">Is On-Going? <u>{{proj.isOngoing}}</u></p>
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div class="card">
               <img class="card-img-top" src="assets/project1.png" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">FabaButter: Dairy-Free Butter</h5>
@@ -77,7 +123,7 @@
                 <hr>
                 <a routerLink="/add-pledge-type" routerLinkActive="active" class="btn btn-primary" style="color:white">Add Pledge Type</a>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <hr>
@@ -87,7 +133,19 @@
         <h2 class="header-text"><b><i class="fa fa-handshake"></i> PLEDGES</b></h2>
         <div class="container">
           <div class="d-flex flex-shrink" id="flexCards">
-            <div class="card">
+            <div class="d-flex flex-shrink" id="flexCards">
+            <ng-container *ngFor="let projP of data.ownedPledges">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{projP.id}}</b></h5>
+                  <p class="card-text">Amount Pledged: {{projP.amountPledged}}</p>
+                  <p class="card-text">Compensation: ${{projP.compensation}}</p>
+                  <p class="card-text">Entitlement(s): {{projP.entitlement}}</p>
+                  <p class="card-text">Is Active? <u>{{projP.isActive}}</u></p>
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div class="card">
               <img class="card-img-top" src="assets/project4.png" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">Bricoleur Mag Issue Two</h5>
@@ -110,7 +168,7 @@
                 <p class="date"><i class="fa fa-calendar"></i> End date: 30 May 2018</p>
                 <a class="btn btn-primary" style="color:white">Exchange</a>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <hr>
