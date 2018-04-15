@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./AddPledgeType.component.css']
 })
 export class AddPledgeTypeComponent {
-public projId:string;
+	public projId:string;
 
   title = 'app works!';
   private apiUrl = 'http://localhost:3000/api/org.acme.model.ProjectListing/';

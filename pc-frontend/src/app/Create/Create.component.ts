@@ -25,7 +25,7 @@ export class CreateComponent{
    let option = new RequestOptions({ headers: headers });
    let data = JSON.stringify({
                               "$class": "org.acme.model.createProjListing",
-                              "creator": "resource:org.acme.model.User#alice@foo",
+                              "creator": "resource:org.acme.model.User#alice@foo.com",
                               "name": projName.value,
                               "description": projDesc.value,
                               "endDate": "2018-12-14T00:00:00.015Z",

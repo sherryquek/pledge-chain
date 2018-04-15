@@ -6,31 +6,20 @@
     <div class="container-quarter">
 
       <div class="container-main">
-        <img src="/assets/project1.png" style="width:100%">
+        <br>
+        <img src="/assets/yellow4.png" style="width:100%">
         <div class="container">
-          <!-- <ng-container *ngFor="let pL of data">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{pL.description}}</h5>
-                  <p class="card-text">{{ProjectListing.description}}</p>
-                  <p class="card-text">{{ProjectListing.startDate}}</p>
-                  <a routerLink="/project-details" routerLinkActive="active" class="btn btn-primary">Know More</a>
-                </div>
-              </div>
-            </ng-container> -->
-            <h5 class="card-title"><b>{{data.projName}}</b></h5>
-            <p class="card-text"><b>{{data.description}}</b></p>
-            <p class="card-text">Status: {{data.status}}</p>
-            <p class="card-text">Target: <u>${{data.fundingTarget}}</u></p> 
-            <p class="card-text">Currently Raised: <u>${{data.currRaised}}</u></p>
-          <!-- <div class="date"><i class="fa fa-calendar"></i></div>
-          <div class="date">Funding End date: 30 May 2018</div>
-          <div class="grey-bg">
-            <div class="blue-bg" style="width:90%">90%</div>
-          </div>
-          <br>
-          <div class="date">Project End date: 1 Sep 2018</div>
-          <div class="grey-bg">Project not yet started</div> -->
+            <br>
+            <h4 class="card-title"><b>{{data.projName}}</b></h4>
+            <hr>
+            <p class="card-text">{{data.description}}</p>
+            <hr>
+            <p class="card-text"><b>Status: </b>{{data.status}}</p>
+            <p class="card-text"><b>Target: </b>${{data.fundingTarget}}</p>
+            <p class="card-text"><b>Currently Raised: </b>${{data.currRaised}}</p>
+            <p class="card-text"><b>Status: </b><i>{{data.status}}</i></p>
+            <p class="card-text"><b>Funding End Date:</b><br><i>{{data.fundingEndDate.substring(0,10)}}</i></p>
+            <p class="card-text"><b>Project End Date:</b><br><i>{{data.endDate.substring(0,10)}}</i></p>
         </div>
         <br>
       </div>
@@ -47,11 +36,13 @@
           <div class="d-flex flex-shrink" id="flexCards">
             <ng-container *ngFor="let proj of data.pledgeTypes">
               <div class="card">
+                <img class="card-img-top" src="assets/yellow2.png" alt="Card image cap">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Minimum ${{proj.minAmount}}</b></h5>
-                  <p class="card-text">Entitlement: {{proj.entitlement}}</p>
-                  <p class="card-text"># Pledgers: {{proj.currentPledged}}</p>
-                  <p class="card-text">Compensation: ${{proj.compensation}}</p>
+                  <h5 class="card-title"><b>MINIMUM: </b>${{proj.minAmount}}</h5>
+                  <hr>
+                  <p class="card-text"><b>Entitlement: </b><br>{{proj.entitlement}}</p>
+                  <!-- <p class="card-text"><b>Pledgers: {{proj.currentPledged}}</p> -->
+                  <p class="card-text"><b>Compensation: </b>${{proj.compensation}}</p>
                    <a routerLink="/pledge-amount/{{proj.referenceID}}" routerLinkActive="active" class="btn btn-primary" style="color:white">Pledge</a>
                 </div>
               </div>

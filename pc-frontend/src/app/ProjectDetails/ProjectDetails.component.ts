@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
@@ -11,8 +10,8 @@ import 'rxjs/add/operator/map';
 })
 export class ProjectDetailsComponent implements OnInit {
   public projId:string;
-  ngOnInit() {
-  }
+
+  ngOnInit() {}
 
   title = 'app works!';
   private apiUrl = 'http://localhost:3000/api/org.acme.model.ProjectListing/';

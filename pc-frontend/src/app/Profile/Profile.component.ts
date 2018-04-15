@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 export class ProfileComponent implements OnInit {
 
   title = 'app works!';
-  private apiUrl = 'http://localhost:3000/api/org.acme.model.User/alice%40foo';
+  private apiUrl = 'http://localhost:3000/api/org.acme.model.User/alice%40foo.com';
   data: any = {};
 
   constructor(private http: Http, private route: ActivatedRoute) {

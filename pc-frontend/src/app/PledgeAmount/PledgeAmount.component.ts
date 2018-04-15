@@ -41,18 +41,14 @@ export class PledgeAmountComponent{
   }
 
   requestPledge(form: NgForm) {
-
-   let headers = new Headers({ 'Content-Type': 'application/json' });
-   let option = new RequestOptions({ headers: headers });
-   let data = JSON.stringify({
-                 "$class": "org.acme.model.requestPledge",
-				  "template": "resource:org.acme.model.PledgeTemplate#" + this.referenceID,
-				  "user": "resource:org.acme.model.User#alice1@foo",
-				  "amountPledged": amount.value
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let option = new RequestOptions({ headers: headers });
+		let data = JSON.stringify({
+									"$class": "org.acme.model.requestPledge",
+								  "template": "resource:org.acme.model.PledgeTemplate#" + this.referenceID,
+								  "user": "resource:org.acme.model.User#alice@foo.com",
+								  "amountPledged": amount.value
                });
-   return this.http.post('http://localhost:3000/api/org.acme.model.requestPledge', data, option).subscribe((response: Response) => { return response.json() })
- }
-
+		return this.http.post('http://localhost:3000/api/org.acme.model.requestPledge', data, option).subscribe((response: Response) => { return response.json() })
+	}
 }
-
-
