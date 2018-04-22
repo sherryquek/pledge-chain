@@ -10,6 +10,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./AddPledgeType.component.css']
 })
 export class AddPledgeTypeComponent {
+  // assuming that we are currently using alice's account to create a project
+  u: user = "alice@foo.com"
+
 	public projId:string;
 
   title = 'app works!';
@@ -46,8 +49,9 @@ export class AddPledgeTypeComponent {
    let headers = new Headers({ 'Content-Type': 'application/json' });
    let option = new RequestOptions({ headers: headers });
    let data = JSON.stringify({
-                              "$class": "org.acme.model.addTemplate",
-							  "proj": "resource:org.acme.model.ProjectListing#" + this.projId,
+                "$class": "org.acme.model.addTemplate",
+							  "proj": "resource:org.acme.model.ProjectListing#"+this.projId,
+								"user": "resource:org.acme.model.User#"+this.u,
 							  "minAmount": minamt.value,
 							  "entitlement": entitlement.value,
 							  "limit": limit.value,

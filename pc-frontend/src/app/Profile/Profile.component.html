@@ -35,12 +35,9 @@
                 <img class="card-img-top" src="assets/yellow2.png" alt="Card image cap">
                 <div class="card-body">
                   <h5 class="card-title"><b>{{proj.projName}}</b></h5>
-                  <!-- <hr>
-                  <p class="card-text">{{proj.description}}</p> -->
                   <hr>
                   <p class="card-text"><b>Funding Target: </b>${{proj.fundingTarget}}</p>
                   <p class="card-text"><b>Currently Raised: </b>${{proj.currRaised}}</p>
-                  <!-- <p class="card-text">Is On-Going? <u>{{proj.isOngoing}}</u></p> -->
                   <p class="card-text"><b>Funding End Date:</b><br><i>{{proj.fundingEndDate.substring(0,10)}}</i></p>
                   <p class="card-text"><b>Project End Date:</b><br><i>{{proj.endDate.substring(0,10)}}</i></p>
                   <a routerLink="/add-pledge-type/{{proj.projId}}" routerLinkActive="active" class="btn btn-primary" style="color:white">Add Pledge Type</a>
@@ -65,34 +62,9 @@
                   <p class="card-text"><b>Amount Pledged: </b>{{projP.amountPledged}}</p>
                   <p class="card-text"><b>Compensation: </b>${{projP.compensation}}</p>
                   <p class="card-text"><b>Entitlement: </b>{{projP.entitlement}}</p>
-                  <!-- <p class="card-text">Is Active? <u>{{projP.isActive}}</u></p> -->
                 </div>
               </div>
             </ng-container>
-            <!-- <div class="card">
-              <img class="card-img-top" src="assets/project4.png" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Bricoleur Mag Issue Two</h5>
-                <p class="date"><i class="fa fa-calendar"></i> End date: 30 May 2018</p>
-                <a class="btn btn-primary" style="color:white">Exchange</a>
-              </div>
-            </div>
-            <div class="card">
-              <img class="card-img-top" src="assets/project5.png" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Picolor</h5>
-                <p class="date"><i class="fa fa-calendar"></i> End date: 30 May 2018</p>
-                <a class="btn btn-primary" style="color:white">Exchange</a>
-              </div>
-            </div>
-            <div class="card">
-              <img class="card-img-top" src="assets/project6.png" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Umbrellamp</h5>
-                <p class="date"><i class="fa fa-calendar"></i> End date: 30 May 2018</p>
-                <a class="btn btn-primary" style="color:white">Exchange</a>
-              </div>
-            </div> -->
           </div>
         </div>
         <hr>
