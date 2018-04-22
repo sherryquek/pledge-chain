@@ -28,13 +28,13 @@ export class PledgeAmountComponent{
   	this.getData(this.referenceID);
   }
 
-  getData() {
+  getData(projId:String) {
   	return this.http.get(this.apiUrl)
   		.map((res: Response) => res.json())
   }
 
-  getContacts() {
-  	this.getData().subscribe(data => {
+	getContacts(projId:String) {
+  	this.getData(projId).subscribe(data => {
   		console.log(data);
   		this.data = data
   	})
