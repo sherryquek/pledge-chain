@@ -1,0 +1,206 @@
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule ParticipantsSystem {
+    description: "Grant all participants access to system resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule ParticipantsReadAccess {
+    description: "Grant all participants read access to model resources."
+    participant: "ANY"
+    operation: READ
+    resource: "**"
+    action: ALLOW
+}
+
+rule creatorCannotRequestPledge {
+    description: "Project creators are not allowed to back their own project."
+    participant(m): "org.acme.model.User"
+    operation: CREATE, UPDATE
+    resource(v): "org.acme.model.Pledge"
+    transaction(tx): "org.acme.model.requestPledge"
+    condition: (tx.user.getIdentifier() == tx.template.proj.creator.getIdentifier())
+    action: DENY
+}
+
+rule onlyCreatorsCanAddTemplate {
+    description: "Only project creators are allowed to create pledge templates to add to their own project."
+    participant(m): "org.acme.model.User"
+    operation: CREATE, UPDATE
+    resource(v): "org.acme.model.PledgeTemplate"
+    transaction(tx): "org.acme.model.addTemplate"
+    condition: (tx.user.getIdentifier() != tx.proj.creator.getIdentifier())
+    action: DENY
+}
+
+rule onlyCreatorsCanCancelProj {
+    description: "Only project creators are allowed to cancel their own project."
+    participant(m): "org.acme.model.User"
+    operation: UPDATE
+    resource(v): "org.acme.model.ProjectListing"
+    transaction(tx): "org.acme.model.cancelProj"
+    condition: (tx.user.getIdentifier() != tx.proj.creator.getIdentifier())
+    action: DENY
+}
+
+rule UserRequestPledge {
+    description: "Allow users the ability to use requestPledge transaction."
+    participant: "org.acme.model.User"
+    operation: CREATE
+    resource: "org.acme.model.requestPledge"
+    action: ALLOW
+}
+
+rule UserCreateProj {
+    description: "Allow users the ability to use createProjListing transaction."
+    participant: "org.acme.model.User"
+    operation: CREATE
+    resource: "org.acme.model.createProjListing"
+    action: ALLOW
+}
+
+rule UserAddTemplate {
+    description: "Allow users the ability to use addTemplate transaction."
+    participant: "org.acme.model.User"
+    operation: CREATE
+    resource: "org.acme.model.addTemplate"
+    action: ALLOW
+}
+
+rule UserCancelProj {
+    description: "Allow users the ability to use cancelProj transaction."
+    participant: "org.acme.model.User"
+    operation: CREATE
+    resource: "org.acme.model.cancelProj"
+    action: ALLOW
+}
+
+rule LogsUpdateProjStatus {
+    description: "Allow logistics services the ability to use updateProjStatus transaction."
+    participant: "org.acme.model.DeliveryService"
+    operation: CREATE
+    resource: "org.acme.model.updateProjStatus"
+    action: ALLOW
+}
+
+rule LogsUpdatePledgeStatus {
+    description: "Allow logistics services the ability to use updatePledgeStatus transaction."
+    participant: "org.acme.model.DeliveryService"
+    operation: CREATE
+    resource: "org.acme.model.updatePledgeStatus"
+    action: ALLOW
+}
+
+rule PaymentsUpdateClosedProj {
+    description: "Allow payments services the ability to use closeProjPayment transaction."
+    participant: "org.acme.model.PaymentService"
+    operation: CREATE
+    resource: "org.acme.model.closeProjPayment"
+    action: ALLOW
+}
+
+rule PaymentsUpdateFundedProj {
+    description: "Allow payments services the ability to use fundedProjPayment transaction."
+    participant: "org.acme.model.PaymentService"
+    operation: CREATE
+    resource: "org.acme.model.fundedProjPayment"
+    action: ALLOW
+}
+
+
+rule UserPledgeAccess {
+    description: "Allow users read, create and update access to Pledge assets."
+    participant: "org.acme.model.User"
+    operation: READ, CREATE, UPDATE
+    resource: "org.acme.model.Pledge"
+    action: ALLOW
+}
+
+rule LogsPledgeAccess {
+    description: "Allow logistics services read and update access to Pledge assets."
+    participant: "org.acme.model.DeliveryService"
+    operation: READ, UPDATE
+    resource: "org.acme.model.Pledge"
+    action: ALLOW
+}
+
+rule PaymentsPledgeAccess {
+    description: "Allow payments services read and update access to Pledge assets."
+    participant: "org.acme.model.PaymentService"
+    operation: READ, UPDATE
+    resource: "org.acme.model.Pledge"
+    action: ALLOW
+}
+
+rule UserTemplateAccess {
+    description: "Allow users read, create and update access to PledgeTemplate assets."
+    participant: "org.acme.model.User"
+    operation: READ, CREATE, UPDATE
+    resource: "org.acme.model.PledgeTemplate"
+    action: ALLOW
+}
+
+rule LogsTemplateAccess {
+    description: "Allow logistics services read access to PledgeTemplate assets."
+    participant: "org.acme.model.DeliveryService"
+    operation: READ
+    resource: "org.acme.model.PledgeTemplate"
+    action: ALLOW
+}
+
+rule PaymentsTemplateAccess {
+    description: "Allow payments services read access to PledgeTemplate assets."
+    participant: "org.acme.model.PaymentService"
+    operation: READ
+    resource: "org.acme.model.PledgeTemplate"
+    action: ALLOW
+}
+
+rule UserProjectAccess {
+    description: "Allow users read, create and update access to ProjectListing assets."
+    participant: "org.acme.model.User"
+    operation: READ, CREATE, UPDATE
+    resource: "org.acme.model.ProjectListing"
+    action: ALLOW
+}
+
+rule LogsProjectAccess {
+    description: "Allow logistics services read and update access to ProjectListing assets."
+    participant: "org.acme.model.DeliveryService"
+    operation: READ, UPDATE
+    resource: "org.acme.model.ProjectListing"
+    action: ALLOW
+}
+
+rule PaymentsProjectAccess {
+    description: "Allow payments services read and update access to ProjectListing assets."
+    participant: "org.acme.model.PaymentService"
+    operation: READ, UPDATE
+    resource: "org.acme.model.ProjectListing"
+    action: ALLOW
+}
+
+rule ParticipantsUpdateUserAccess {
+    description: "Grant all participants update access to user registry if transaction is not previously denied."
+    participant: "ANY"
+    operation: UPDATE
+    resource: "org.acme.model.User"
+    action: ALLOW
+}

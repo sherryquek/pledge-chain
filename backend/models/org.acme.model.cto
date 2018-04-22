@@ -1,0 +1,150 @@
+/**
+ * Defines model for pledge issue and exchange
+ */
+
+namespace org.acme.model
+
+/* Participants */
+
+participant User identified by email {
+o String email regex=/[a-z0-9.-]+@[a-z0-9.]+/
+o String username
+o String fullname
+o Gender gender
+o String description optional
+o Address address
+o ProjectListing[] projects
+o Pledge[] ownedPledges
+}
+
+participant DeliveryService identified by companyName {
+o String companyName
+o String description
+o String email
+o String phoneNumber
+o String website
+}
+
+participant PaymentService identified by companyName {
+o String companyName
+o String description
+o String email
+o String phoneNumber
+o String website
+}
+
+
+/* Assets */
+
+asset Pledge identified by id {
+o String id
+--> User owner
+--> ProjectListing proj
+o Double amountPledged
+o String entitlement optional
+o Boolean isActive
+o Double compensation
+}
+
+asset ProjectListing identified by projId {
+o String projId
+o String projName
+o String description
+o Integer fundingTarget
+o Double currRaised
+o DateTime startDate
+o DateTime endDate
+o DateTime fundingEndDate
+o Boolean isOngoing
+o PledgeTemplate[] pledgeTypes optional
+o Integer nPledgeTypes
+o Pledge[] issuedPledges optional
+--> User creator
+o ProjectStatus status
+}
+
+asset PledgeTemplate identified by referenceID{
+--> ProjectListing proj
+o String referenceID
+o Double minAmount
+o String entitlement optional
+o Integer limit optional
+o Integer currentPledged
+o Double compensation
+}
+
+
+/* Transactions */
+
+transaction requestPledge {
+--> PledgeTemplate template
+--> User user
+o Double amountPledged
+}
+
+transaction createProjListing {
+--> User creator
+o String name
+o String description
+o DateTime endDate
+o DateTime startDate
+o String projectID
+o Integer fundingTarget
+o DateTime fundingEndDate
+}
+
+transaction addTemplate {
+--> ProjectListing proj
+--> User user
+o Double minAmount
+o String entitlement optional
+o Integer limit optional
+o Double compensation
+}
+
+transaction cancelProj{
+--> User user
+--> ProjectListing proj
+}
+
+transaction updateProjStatus {
+--> ProjectListing proj
+o ProjectStatus newStatus
+}
+
+transaction updatePledgeStatus {
+--> Pledge pledge
+}
+
+transaction closeProjPayment {
+o DateTime currDate
+}
+
+transaction fundedProjPayment {
+o DateTime currDate
+}
+
+
+/* Supporting Concepts and Enumerations */
+
+enum Gender {
+o Male
+o Female
+o Other
+}
+
+enum ProjectStatus {
+o Funding
+o Funded
+o Shipping
+o Cancelled
+o Closed
+}
+
+concept Address {
+o String house
+o String street
+o String county
+o String postcode
+o String country
+}
