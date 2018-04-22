@@ -1,6 +1,6 @@
 # PledgeChain Demo
 
-This is a prototype user interface meant to demonstrate transactions and basic use cases for User participants. This demonstration works with a user with the identifer of "alice@foo.com".
+This is a prototype user interface meant to demonstrate transactions and basic use cases for User participants. This demonstration works with a test user with the identifier of "alice@foo.com".
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
